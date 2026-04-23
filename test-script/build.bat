@@ -1,7 +1,11 @@
 @echo off
 setlocal EnableDelayedExpansion
+set "PROJ=C:\gitcloud\auto-lorr-new\lorr-code"
+set "CMAKE=C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe"
+set "CC=C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.50.35717\bin\Hostx64\x64\cl.exe"
+set "CXX=C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.50.35717\bin\Hostx64\x64\cl.exe"
+set "CMAKE_PREFIX_PATH=C:\boost_1_86_0"
 set "PATH=C:\msys64\ucrt64\bin;C:\msys64\usr\bin;%PATH%"
-set "PROJ=%~dp0..\LORR26_842072627"
 cd /d "%PROJ%"
 
 echo ==========================================
@@ -14,18 +18,18 @@ if exist build (
     rmdir /s /q build
 )
 
-echo Configuring CMake with Python311...
-C:\msys64\ucrt64\bin\cmake.exe -B build -G "Unix Makefiles" . ^
+echo Configuring CMake...
+"%CMAKE%" -B build -G "NMake Makefiles" . ^
     -DCMAKE_BUILD_TYPE=Release ^
     -DBoost_USE_STATIC_LIBS=OFF ^
-    -DPYTHON_EXECUTABLE=C:/Python311/python.exe ^
-    -DPYTHON_LIBRARY=C:/Python311/libs/python311.lib ^
-    -DPYTHON_INCLUDE_DIR=C:/Python311/include ^
-    -Wno-dev
+    -DPYTHON_EXECUTABLE=C:/Python314/python.exe ^
+    -DPYTHON_LIBRARY=C:/Python314/libs/python314.lib ^
+    -DPYTHON_INCLUDE_DIR=C:/Python314/include ^
+    -Wno-dev 2>&1
 
 echo.
-echo Building lifelong.exe (-j4)...
-C:\msys64\ucrt64\bin\cmake.exe --build build --target lifelong -j4
+echo Building lifelong.exe...
+"%CMAKE%" --build build --target lifelong 2>&1
 
 if exist build\lifelong.exe (
     for %%A in (build\lifelong.exe) do set SZ=%%~zA

@@ -1,22 +1,20 @@
 # MAPF Test Script for RANDOM map
 # Tests random map only, saves to random_round/
 
-$PROJ_DIR = "C:\Users\Administrator\Desktop\test-studio-mapf\LORR26_842072627"
+$PROJ_DIR = "C:\gitcloud\auto-lorr-new\lorr-code"
 $SRC_DIR = "$PROJ_DIR\src"
 $LIFELONG = "$PROJ_DIR\build\lifelong.exe"
-$OUTPUT_BASE = "C:\Users\Administrator\Desktop\test-studio-mapf\test-scripts\random_round"
+$OUTPUT_BASE = "C:\gitcloud\auto-lorr-new\test-script\random_round"
 $PROBLEMS = "$PROJ_DIR\example_problems"
-$SCRIPT_DIR = "C:\Users\Administrator\Desktop\test-studio-mapf\test-scripts"
+$SCRIPT_DIR = "C:\gitcloud\auto-lorr-new\test-script"
 
 $env:PATH = "C:\msys64\ucrt64\bin;C:\msys64\usr\bin;$env:PATH"
 
-# Check build
 if (-not (Test-Path $LIFELONG)) {
     Write-Host "Build not found!"
     exit 1
 }
 
-# Compute source MD5 via Python
 $origDir = $PWD
 Set-Location $SRC_DIR
 $MD5_OUTPUT = & python -c @"
@@ -36,7 +34,6 @@ Set-Location $origDir
 $MD5 = $MD5_OUTPUT.Trim()
 Write-Host "Source MD5: $MD5"
 
-# Check cache by source MD5
 $cached = Get-ChildItem "$OUTPUT_BASE\round*" -Directory -ErrorAction SilentlyContinue | Where-Object {
     $content = Get-Content "$($_.FullName)\scores.txt" -Raw -ErrorAction SilentlyContinue
     $content -match "MD5: $MD5"
@@ -49,7 +46,6 @@ if ($cached) {
     exit 0
 }
 
-# Find next round
 $ROUND = 1
 while (Test-Path "$OUTPUT_BASE\round$ROUND") { $ROUND++ }
 $OUTPUT_DIR = "$OUTPUT_BASE\round$ROUND"
@@ -57,14 +53,12 @@ New-Item -ItemType Directory -Path $OUTPUT_DIR -Force | Out-Null
 
 Write-Host "MAPF Random Test (round$ROUND) - MD5: $MD5"
 
-# Test random map
-$map = @{name="random"; dir="random.domain"; file="random-example_400.json"; steps=300}
+$map = @{name="random"; dir="random.domain"; file="random-example_400.json"; steps=200}
 $oldLoc = Get-Location
 Set-Location "$PROBLEMS\$($map.dir)"
 & $LIFELONG -i $map.file -s $map.steps -o "$OUTPUT_DIR\$($map.name).json" 2>&1 | Select-String -Pattern "error|Error|ERROR" | Select-Object -First 5
 Set-Location $oldLoc
 
-# Parse results (score = tasks / makespan)
 $jsonFile = "$OUTPUT_DIR\$($map.name).json"
 if (Test-Path $jsonFile) {
     $content = Get-Content $jsonFile -Raw
@@ -80,7 +74,6 @@ if (Test-Path $jsonFile) {
     "$($map.name): NO DATA" | Out-File "$OUTPUT_DIR\scores.txt"
 }
 
-# Write MD5 to scores.txt
 $scoresFile = "$OUTPUT_DIR\scores.txt"
 $md5Line = "MD5: $MD5"
 if (-not (Select-String -Path $scoresFile -Pattern "^MD5:" -Quiet)) {

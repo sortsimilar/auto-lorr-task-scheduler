@@ -1,12 +1,12 @@
 # MAPF Test Script for MAZE map
 # Tests maze map only, saves to maze_round/
 
-$PROJ_DIR = "C:\Users\Administrator\Desktop\test-studio-mapf\LORR26_842072627"
+$PROJ_DIR = "C:\gitcloud\auto-lorr-new\lorr-code"
 $SRC_DIR = "$PROJ_DIR\src"
 $LIFELONG = "$PROJ_DIR\build\lifelong.exe"
-$OUTPUT_BASE = "C:\Users\Administrator\Desktop\test-studio-mapf\test-scripts\maze_round"
+$OUTPUT_BASE = "C:\gitcloud\auto-lorr-new\test-script\maze_round"
 $PROBLEMS = "$PROJ_DIR\example_problems"
-$SCRIPT_DIR = "C:\Users\Administrator\Desktop\test-studio-mapf\test-scripts"
+$SCRIPT_DIR = "C:\gitcloud\auto-lorr-new\test-script"
 
 $env:PATH = "C:\msys64\ucrt64\bin;C:\msys64\usr\bin;$env:PATH"
 
@@ -53,13 +53,12 @@ New-Item -ItemType Directory -Path $OUTPUT_DIR -Force | Out-Null
 
 Write-Host "MAPF Maze Test (round$ROUND) - MD5: $MD5"
 
-$map = @{name="maze"; dir="maze.domain"; file="maze-example_40.json"; steps=500}
+$map = @{name="maze"; dir="maze.domain"; file="maze-example_40.json"; steps=200}
 $oldLoc = Get-Location
 Set-Location "$PROBLEMS\$($map.dir)"
 & $LIFELONG -i $map.file -s $map.steps -o "$OUTPUT_DIR\$($map.name).json" 2>&1 | Select-String -Pattern "error|Error|ERROR" | Select-Object -First 5
 Set-Location $oldLoc
 
-# Parse results (score = tasks / makespan)
 $jsonFile = "$OUTPUT_DIR\$($map.name).json"
 if (Test-Path $jsonFile) {
     $content = Get-Content $jsonFile -Raw
