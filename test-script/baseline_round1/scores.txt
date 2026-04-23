@@ -1,0 +1,7 @@
+random: 0.310 (tasks=62, makespan=200)
+bos: 0.000 (tasks=0, makespan=200)
+room: 0.085 (tasks=17, makespan=200)
+maze: 0.020 (tasks=4, makespan=200)
+fulfill: 0.000 (tasks=0, makespan=200)
+orz: 0.045 (tasks=9, makespan=200)
+iron: 0.000 (tasks=0, makespan=200)

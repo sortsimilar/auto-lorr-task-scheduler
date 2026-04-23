@@ -1,16 +1,25 @@
 @echo off
 setlocal EnableDelayedExpansion
+
 set "PROJ=C:\gitcloud\auto-lorr-new\lorr-code"
-set "CMAKE=C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe"
-set "CC=C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.50.35717\bin\Hostx64\x64\cl.exe"
-set "CXX=C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.50.35717\bin\Hostx64\x64\cl.exe"
-set "CMAKE_PREFIX_PATH=C:\boost_1_86_0"
-set "PATH=C:\msys64\ucrt64\bin;C:\msys64\usr\bin;%PATH%"
+set "MINGW_ROOT=C:\msys64\msys64\mingw64"
+set "MINGW_BIN=C:\msys64\msys64\mingw64\bin"
+set "MSYS_BIN=C:\msys64\msys64\usr\bin"
+set "CMAKE=%MINGW_BIN%\cmake.exe"
+
+set "PATH=%MINGW_BIN%;%MSYS_BIN%;%PATH%"
+set "CC=gcc"
+set "CXX=g++"
+set "CFLAGS=-O2"
+set "CXXFLAGS=-O2"
+
 cd /d "%PROJ%"
 
 echo ==========================================
-echo   LORR Build Script
+echo   LORR Build Script (MinGW)
 echo ==========================================
+echo CC: %CC%
+echo CXX: %CXX%
 echo.
 
 if exist build (
@@ -18,9 +27,12 @@ if exist build (
     rmdir /s /q build
 )
 
-echo Configuring CMake...
-"%CMAKE%" -B build -G "NMake Makefiles" . ^
+echo Configuring CMake with MinGW...
+"%CMAKE%" -B build -G "MinGW Makefiles" . ^
     -DCMAKE_BUILD_TYPE=Release ^
+    -DCMAKE_C_COMPILER="%MINGW_BIN%\gcc.exe" ^
+    -DCMAKE_CXX_COMPILER="%MINGW_BIN%\g++.exe" ^
+    -DCMAKE_MAKE_PROGRAM="%MINGW_BIN%\make.exe" ^
     -DBoost_USE_STATIC_LIBS=OFF ^
     -DPYTHON_EXECUTABLE=C:/Python314/python.exe ^
     -DPYTHON_LIBRARY=C:/Python314/libs/python314.lib ^
