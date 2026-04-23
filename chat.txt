@@ -1,4 +1,10 @@
-脚本测试目录在 C:\gitcloud\auto-lorr-new\test-script 里面，你要把脚本全部都可以测试项目里面得内容，并且测试后要无bug，测试分为每张地图测试和全图测试，你不仅要修复workflow的目录内容，还要修复每个脚本的功能，所有的脚本只把md5版本放进workflow里面提供使用，测试要但是要测试所有的脚本确保编译和各项功能都没有问题，为了节约时间，你脚本测试的时候步数都调整为200步，测试结束后还原回去，确保每个脚本最后功能都正常，你不需要做长步数测试。
-你现在要做C:\gitcloud\auto-lorr-new\lorr-code这个项目 ， executor方向，C:\gitcloud\auto-lorr-new\lorr-code\src MAPF-workflow.md有项目信息，里面有部分具体文件路径改到C:\gitcloud\auto-lorr-new\test-script这个里面了，你需要修复文件路径，并且查询executor能够改的文件，把executor修改规范更新到workflow. 你浏览官网 和submission.md可以找到具体的信息，读读相关信息把可以改的文件找到。写入workflow
+你现在要做的项目是C:\gitcloud\auto-lorr-new\lorr-code ，请牢牢记住项目位置到记忆和heartbeat.md
+你要在项目src下新建一个notes目录然后读取C:\gitcloud\auto-lorr-new\test-script 里面的 SKILL.md，写到自己的skills名称叫大实验skill，也要记忆中记住 以后做实验必须做笔记，写入绝对路径到这个notes文件夹里面，用绝对路径以免建得到处都是的。
+
+
+你现在要做C:\gitcloud\auto-lorr-new\lorr-code这个项目 ， schedule方向，C:\gitcloud\auto-lorr-new\lorr-code\src MAPF-workflow.md有项目信息，里面有部分具体文件路径改到C:\gitcloud\auto-lorr-new\test-script这个里面了，你需要修复文件路径，并且查询schedule方向能够改的文件，把schedule方向修改规范更新到workflow. 你浏览官网 和submission.md可以找到具体的信息，读读相关信息把可以改的文件找到。写入workflow
 冠军代码在这个里面C:\gitcloud\auto-lorr-new\Best-Implementations-2024，然后workflow 是在 C:\gitcloud\auto-lorr-new\lorr-code\src下的 MAPF-workflow.md ，牢牢记住这两个位置到workflow和记忆里面
-你要在项目src下新建一个notes目录然后修改skills里面额大实验skills，也要记忆中记住 以后做实验必须做笔记，写入绝对路径到这个notes文件夹里面，用绝对路径以免建得到处都是的。
+
+
+脚本测试目录在 C:\gitcloud\auto-lorr-new\test-script 里面，你要把脚本全部都可以跑通去测试项目里面得内容，并且测试后要无bug，测试分为每张地图测试和全图测试，你不仅要修复workflow的目录内容，还要修复每个脚本的功能，所有的脚本只把md5版本放进workflow里面提供使用，测试要但是要测试所有的脚本确保编译和各项功能都没有问题，为了节约时间，你脚本测试的时候步数都调整为200步，测试结束后还原回去，确保每个脚本最后功能都正常，你不需要做长步数测试。
+
